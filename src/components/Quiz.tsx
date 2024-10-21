@@ -1,5 +1,7 @@
 import { useQuestionsStore } from '../store/useQuestionsStore'
 import { Question } from '../types'
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import { gradientDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 function Quiz() {
   const currentQuestion = useQuestionsStore((state) => state.currentQuestion)
@@ -12,7 +14,13 @@ function Quiz() {
             {i === currentQuestion && (
               <div key={question.id}>
                 <p className="title">{question.question}</p>
-                <p className="code">{question.code}</p>
+                <SyntaxHighlighter
+                  className="code"
+                  language="javascript"
+                  style={gradientDark}
+                >
+                  {question.code}
+                </SyntaxHighlighter>
                 <div className="options">
                   {question.answers.map((answer, i) => (
                     <button key={i}>{answer}</button>
