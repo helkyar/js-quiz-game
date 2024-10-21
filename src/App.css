@@ -1,0 +1,75 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.start-btn {
+  width: 5rem;
+}
+.questions{
+  position: relative;
+  top: 10px;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+.title{
+  margin: 0;
+  padding: 8px;
+}
+.code{
+  margin: 0;
+  padding: 8px;
+  background-color: black;
+  color: green;
+  width: 90%;
+  margin: 5px auto;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.options{}
+
+.options button{
+  width: 100%;
+  border-top: 1px solid lightgray;
+  border-radius: 0;
+}
+
+.card{
+  border: 1px solid gray;
+  padding: 8px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+/* Navigation -------------------------------------------------------------------------- */
+.navigation, .navigation-section {
+  display: flex;
+  justify-content: space-between;
+}
+.navigation {
+  display: flex;
+  gap: 4px;
+}
+.navigation button {
+  border-radius: 50%;
+  padding: 0 4px 4px;
+  height: 24px;
+  width: 24px;
+  margin: 4px 0;
+}
+/* Reset ------------------------------------------------------------------------------- */
+.reset button{
+  width: 100%;
+  background-color: darkcyan;
+  margin-top: 10px;
+}
