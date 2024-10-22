@@ -1,3 +1,8 @@
+body{
+  background-color: #333;
+  color: white;
+  height: 100%;
+}
 header {
   display: flex;
   justify-content: center;
@@ -11,11 +16,13 @@ main{
 }
 .start-btn {
   width: 5rem;
+  color: white;
+  background-color: blueviolet;
 }
 .questions{
   position: relative;
   top: 10px;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 8px;
 }
 .title{
@@ -25,8 +32,6 @@ main{
 .code{
   margin: 0;
   padding: 8px;
-  background-color: black;
-  color: green;
   width: 90%;
   margin: 5px auto;
   height: 72px;
@@ -38,21 +43,29 @@ main{
 
 .options button{
   width: 100%;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid gray;
   border-radius: 0;
+  background-color: #555;
+  color: white;
 }
 .options button:last-child{
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 .card{
-  border: 1px solid gray;
   padding: 8px;
   border-radius: 8px;
   width: 400px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.options .correct {
+  background-color: green;
+}
+.options .incorrect{
+  background-color: red;
 }
 /* Navigation -------------------------------------------------------------------------- */
 .navigation, .navigation-section {
@@ -61,7 +74,13 @@ main{
 }
 .navigation {
   display: flex;
+  align-items: center;
+  font-size: 12px;
   gap: 4px;
+  color: grey;
+}
+.navigation span{
+  padding-bottom: 2px;
 }
 .navigation button {
   border-radius: 50%;
@@ -69,10 +88,25 @@ main{
   height: 24px;
   width: 24px;
   margin: 4px 0;
+  background-color: #333;
+  color: gray;
+}
+.info{
+  color: gray;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 4px;
+}
+.info span + span{
+  border-left: 1px solid gray;
+  padding-left: 4px;
 }
 /* Reset ------------------------------------------------------------------------------- */
 .reset button{
   width: 100%;
-  background-color: darkcyan;
+  background-color: #333;
+  color: gray;
   margin-top: 10px;
 }

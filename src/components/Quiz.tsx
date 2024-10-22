@@ -6,6 +6,7 @@ import { gradientDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 function Quiz() {
   const currentQuestion = useQuestionsStore((state) => state.currentQuestion)
   const questions = useQuestionsStore((state) => state.questions)
+  const selectAnswer = useQuestionsStore((state) => state.selectAnswer)
   return (
     <>
       <section className="questions">
@@ -23,7 +24,23 @@ function Quiz() {
                 </SyntaxHighlighter>
                 <div className="options">
                   {question.answers.map((answer, i) => (
-                    <button key={i}>{answer}</button>
+                    <button
+                      className={`${
+                        question.userSelectedAnswer === i &&
+                        !question.isCorrectUserAnswer
+                          ? 'incorrect'
+                          : ''
+                      } ${
+                        question.userSelectedAnswer !== undefined &&
+                        question.correctAnswer === i
+                          ? 'correct'
+                          : ''
+                      } `}
+                      key={i}
+                      onClick={() => selectAnswer(question.id, i)}
+                    >
+                      {answer}
+                    </button>
                   ))}
                 </div>
               </div>

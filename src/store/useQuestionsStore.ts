@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { Questions } from '../types'
 import { getQuestions } from '../services/getQuestions'
 import { devtools, persist } from 'zustand/middleware'
+import confetti from 'canvas-confetti'
 
 interface State {
   isLoading: boolean
@@ -9,7 +10,7 @@ interface State {
   currentQuestion: number
   fetchQuestions: (limit: number) => Promise<void>
   error: string
-  //   selectAnswer: (questionId: number, answerIndex: number) => void
+  selectAnswer: (questionId: number, answerIndex: number) => void
   goNextQuestion: () => void
   goPreviousQuestion: () => void
   reset: () => void
@@ -48,6 +49,25 @@ export const useQuestionsStore = create<State>()(
           const previousQuestion = currentQuestion - 1
           if (previousQuestion < 0) return
           set({ currentQuestion: previousQuestion })
+        },
+        selectAnswer: (questionId, answerIndex) => {
+          const { questions } = get()
+          // get the question info
+          const newQuestions = structuredClone(questions)
+          const questionIndex = newQuestions.findIndex(
+            (question) => questionId === question.id
+          )
+          // check if is correct answer
+          const isCorrectAnswer =
+            answerIndex === newQuestions[questionIndex].correctAnswer
+          if (isCorrectAnswer) confetti()
+          // persist the data
+          newQuestions[questionIndex] = {
+            ...newQuestions[questionIndex],
+            userSelectedAnswer: answerIndex,
+            isCorrectUserAnswer: isCorrectAnswer,
+          }
+          set({ questions: newQuestions }, false, 'SELECT_ANSWER')
         },
         reset: () => set({ questions: [], currentQuestion: 0 }),
       }),

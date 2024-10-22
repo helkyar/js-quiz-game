@@ -1,3 +1,4 @@
+import { QUESTIONS_LIMIT } from '../config'
 import { useQuestionsStore } from '../store/useQuestionsStore'
 
 function Navigation() {
@@ -5,21 +6,22 @@ function Navigation() {
   const goPreviousQuestion = useQuestionsStore(
     (state) => state.goPreviousQuestion
   )
+  const currentQuestion = useQuestionsStore((state) => state.currentQuestion)
   return (
     <section className="navigation-section">
       <div className="navigation">
         <button className="prev" onClick={goPreviousQuestion}>
           {'<'}
-        </button>{' '}
-        {/* TO-DO-fix: should be an icon */}
+        </button>
+        <span>{`${currentQuestion + 1}/${QUESTIONS_LIMIT}`}</span>
         <button className="next" onClick={goNextQuestion}>
           {'>'}
         </button>
       </div>
       <div className="info">
-        <span>{`${1} Correct`}</span> {/* correct */}
-        <span>{`${2} Incorrect`}</span> {/* incorrect */}
-        <span>{`${3} Unanswered`}</span> {/* unanswered */}
+        <span>{`${1} ✅`}</span>
+        <span>{`${2} ❌`}</span>
+        <span>{`${3} ❔`}</span>
       </div>
     </section>
   )
