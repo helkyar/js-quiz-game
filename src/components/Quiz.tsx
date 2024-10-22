@@ -27,6 +27,7 @@ function Quiz() {
                   {question.answers.map((answer, i) => (
                     <button
                       key={i}
+                      disabled={question.userSelectedAnswer != null}
                       className={`${
                         question.userSelectedAnswer === i &&
                         !question.isCorrectUserAnswer
