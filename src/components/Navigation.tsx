@@ -1,25 +1,18 @@
 import { QUESTIONS_LIMIT } from '../config'
+import { useQuestionsData } from '../hooks/useQuestionsData'
 import { useQuestionsStore } from '../store/useQuestionsStore'
 
 function Navigation() {
+  const { correct, incorrect, unanswered } = useQuestionsData()
   const goNextQuestion = useQuestionsStore((state) => state.goNextQuestion)
   const goPreviousQuestion = useQuestionsStore(
     (state) => state.goPreviousQuestion
   )
   const currentQuestion = useQuestionsStore((state) => state.currentQuestion)
-  const questions = useQuestionsStore((state) => state.questions)
   const automatic = useQuestionsStore((state) => state.automatic)
   const toggleAuto = useQuestionsStore(
     (state) => state.toggleAutomaticNextQuestion
   )
-
-  const correctAnswers = questions.filter(
-    (question) => question.isCorrectUserAnswer
-  ).length
-  const incorrectAnswers = questions.filter(
-    (question) => question.isCorrectUserAnswer === false
-  ).length
-  const unanswered = QUESTIONS_LIMIT - (correctAnswers + incorrectAnswers)
 
   return (
     <section className="navigation-section">
@@ -36,8 +29,8 @@ function Navigation() {
         {automatic ? 'Auto' : 'Manual'}
       </button>
       <div className="info">
-        <span>{`${correctAnswers} ✅`}</span>
-        <span>{`${incorrectAnswers} ❌`}</span>
+        <span>{`${correct} ✅`}</span>
+        <span>{`${incorrect} ❌`}</span>
         <span>{`${unanswered} ❔`}</span>
       </div>
     </section>

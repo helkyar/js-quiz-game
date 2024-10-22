@@ -2,11 +2,16 @@ import './App.css'
 import { QUESTIONS_LIMIT } from './config'
 import { useQuestionsStore } from './store/useQuestionsStore'
 import Game from './components/Game'
+import { createPortal } from 'react-dom'
+import Results from './components/Results'
+import { useQuestionsData } from './hooks/useQuestionsData'
 
 function App() {
+  const { unanswered } = useQuestionsData()
   const fetchQuestions = useQuestionsStore((state) => state.fetchQuestions)
   const questions = useQuestionsStore((state) => state.questions)
 
+  const rootModal = document.getElementById('root-modal')
   return (
     <>
       <header>
@@ -22,6 +27,10 @@ function App() {
             Start
           </button>
         )}
+        {unanswered === 0 &&
+          questions.length > 0 &&
+          rootModal &&
+          createPortal(<Results />, rootModal)}
       </main>
     </>
   )
