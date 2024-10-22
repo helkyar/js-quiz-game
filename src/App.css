@@ -1,7 +1,10 @@
 body{
   background-color: #333;
   color: white;
+  min-height: 100vh;
   height: 100%;
+  width: 100%;
+  margin: 0;
 }
 header {
   display: flex;
@@ -68,6 +71,11 @@ main{
   background-color: red;
 }
 /* Navigation -------------------------------------------------------------------------- */
+.toggle-auto-btn{
+  padding: 0 4px;
+  background-color: #333;
+  color: blueviolet;
+}
 .navigation, .navigation-section {
   display: flex;
   justify-content: space-between;

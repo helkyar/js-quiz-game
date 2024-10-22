@@ -7,6 +7,20 @@ function Navigation() {
     (state) => state.goPreviousQuestion
   )
   const currentQuestion = useQuestionsStore((state) => state.currentQuestion)
+  const questions = useQuestionsStore((state) => state.questions)
+  const automatic = useQuestionsStore((state) => state.automatic)
+  const toggleAuto = useQuestionsStore(
+    (state) => state.toggleAutomaticNextQuestion
+  )
+
+  const correctAnswers = questions.filter(
+    (question) => question.isCorrectUserAnswer
+  ).length
+  const incorrectAnswers = questions.filter(
+    (question) => question.isCorrectUserAnswer === false
+  ).length
+  const unanswered = QUESTIONS_LIMIT - (correctAnswers + incorrectAnswers)
+
   return (
     <section className="navigation-section">
       <div className="navigation">
@@ -18,10 +32,13 @@ function Navigation() {
           {'>'}
         </button>
       </div>
+      <button className="toggle-auto-btn" onClick={toggleAuto}>
+        {automatic ? 'Auto' : 'Manual'}
+      </button>
       <div className="info">
-        <span>{`${1} ✅`}</span>
-        <span>{`${2} ❌`}</span>
-        <span>{`${3} ❔`}</span>
+        <span>{`${correctAnswers} ✅`}</span>
+        <span>{`${incorrectAnswers} ❌`}</span>
+        <span>{`${unanswered} ❔`}</span>
       </div>
     </section>
   )

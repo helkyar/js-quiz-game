@@ -7,8 +7,6 @@ function App() {
   const fetchQuestions = useQuestionsStore((state) => state.fetchQuestions)
   const questions = useQuestionsStore((state) => state.questions)
 
-  console.log('🚀 ~ App ~ questions:', questions)
-
   return (
     <>
       <header>

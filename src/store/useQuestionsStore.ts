@@ -3,6 +3,7 @@ import { Questions } from '../types'
 import { getQuestions } from '../services/getQuestions'
 import { devtools, persist } from 'zustand/middleware'
 import confetti from 'canvas-confetti'
+import { DEFAULT_DELAY_TILL_NEXT_QUESTION } from '../config'
 
 interface State {
   isLoading: boolean
@@ -14,6 +15,8 @@ interface State {
   goNextQuestion: () => void
   goPreviousQuestion: () => void
   reset: () => void
+  automatic: boolean
+  toggleAutomaticNextQuestion: () => void
 }
 
 export const useQuestionsStore = create<State>()(
@@ -24,6 +27,7 @@ export const useQuestionsStore = create<State>()(
         currentQuestion: 0,
         isLoading: false,
         error: '',
+        automatic: true,
 
         fetchQuestions: async (limit: number) => {
           try {
@@ -51,7 +55,8 @@ export const useQuestionsStore = create<State>()(
           set({ currentQuestion: previousQuestion })
         },
         selectAnswer: (questionId, answerIndex) => {
-          const { questions } = get()
+          const { questions, automatic, goNextQuestion, currentQuestion } =
+            get()
           // get the question info
           const newQuestions = structuredClone(questions)
           const questionIndex = newQuestions.findIndex(
@@ -68,6 +73,30 @@ export const useQuestionsStore = create<State>()(
             isCorrectUserAnswer: isCorrectAnswer,
           }
           set({ questions: newQuestions }, false, 'SELECT_ANSWER')
+          setTimeout(() => {
+            const unansweredQuestions = questions.filter(
+              (question) => question.userSelectedAnswer == null
+            )
+
+            if (unansweredQuestions.length === 0) return
+            const isLastQuestion = currentQuestion === questions.length - 1
+            const isNextQuestionAnswered =
+              questions[currentQuestion + 1]?.userSelectedAnswer != null
+
+            if (automatic && !isNextQuestionAnswered && !isLastQuestion) {
+              goNextQuestion()
+              return
+            }
+
+            const unansweredQuestionsIndex = questions.findIndex(
+              (q) => unansweredQuestions[0].id === q.id
+            )
+            set({ currentQuestion: unansweredQuestionsIndex })
+          }, DEFAULT_DELAY_TILL_NEXT_QUESTION)
+        },
+        toggleAutomaticNextQuestion: () => {
+          const { automatic } = get()
+          set({ automatic: !automatic })
         },
         reset: () => set({ questions: [], currentQuestion: 0 }),
       }),

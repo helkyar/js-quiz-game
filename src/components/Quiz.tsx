@@ -7,13 +7,14 @@ function Quiz() {
   const currentQuestion = useQuestionsStore((state) => state.currentQuestion)
   const questions = useQuestionsStore((state) => state.questions)
   const selectAnswer = useQuestionsStore((state) => state.selectAnswer)
+
   return (
     <>
       <section className="questions">
         {questions.map((question: Question, i: number) => (
-          <>
+          <div key={question.id}>
             {i === currentQuestion && (
-              <div key={question.id}>
+              <div>
                 <p className="title">{question.question}</p>
                 <SyntaxHighlighter
                   className="code"
@@ -25,6 +26,7 @@ function Quiz() {
                 <div className="options">
                   {question.answers.map((answer, i) => (
                     <button
+                      key={i}
                       className={`${
                         question.userSelectedAnswer === i &&
                         !question.isCorrectUserAnswer
@@ -36,7 +38,6 @@ function Quiz() {
                           ? 'correct'
                           : ''
                       } `}
-                      key={i}
                       onClick={() => selectAnswer(question.id, i)}
                     >
                       {answer}
@@ -45,7 +46,7 @@ function Quiz() {
                 </div>
               </div>
             )}
-          </>
+          </div>
         ))}
       </section>
     </>
