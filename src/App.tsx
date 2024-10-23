@@ -5,6 +5,7 @@ import Game from './components/Game'
 import { createPortal } from 'react-dom'
 import Results from './components/Results'
 import { useQuestionsData } from './hooks/useQuestionsData'
+import { JavaScriptLogo } from './components/ui/logos/Javascript'
 
 function App() {
   const { unanswered } = useQuestionsData()
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
       <header>
+        <JavaScriptLogo />
         <h1>JS Quiz</h1>
       </header>
       <main>
