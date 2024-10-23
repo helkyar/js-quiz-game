@@ -17,3 +17,4 @@ Based on [midudev project](https://github.com/midudev/aprendiendo-react/tree/mas
 
 - Testing (e2e)
 - Multi-language support
+- Tailwind for styles
